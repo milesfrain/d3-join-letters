@@ -44,12 +44,7 @@ function redraw(data) {
                     .attr("y", -60)
                     .attr("x", (d,i) => i * 32 )
                     .style("fill-opacity", 0)
-                    .text(d => d)
-                    .call(sel => sel
-                      .transition(t)
-                        .attr("y", 0)
-                        .style("fill-opacity", 1)
-                    ),
+                    .text(d => d),
       update => update.attr("class", "update")
                   .call(sel => sel
                     .transition(t)
@@ -63,6 +58,11 @@ function redraw(data) {
                       .remove()
                   )
     )
+      .call(sel => sel
+        .transition(t)
+          .attr("y", 0)
+          .style("fill-opacity", 1)
+      )
 }
 
 // Grab a random sample of letters from the alphabet, in alphabetical order.
