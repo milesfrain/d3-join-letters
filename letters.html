@@ -45,17 +45,23 @@ function redraw(data) {
                     .attr("x", (d,i) => i * 32 )
                     .style("fill-opacity", 0)
                     .text(d => d)
-                  .transition(t)
-                    .attr("y", 0)
-                    .style("fill-opacity", 1),
+                    .call(sel => sel
+                      .transition(t)
+                        .attr("y", 0)
+                        .style("fill-opacity", 1)
+                    ),
       update => update.attr("class", "update")
-                  .transition(t)
-                    .attr("x", (d,i) => i * 32 ),
+                  .call(sel => sel
+                    .transition(t)
+                      .attr("x", (d,i) => i * 32 )
+                  ),
       exit => exit.attr("class", "exit")
-                  .transition(t)
-                    .attr("y", 60)
-                    .style("fill-opacity", 0)
-                    .remove()
+                  .call(sel => sel
+                    .transition(t)
+                      .attr("y", 60)
+                      .style("fill-opacity", 0)
+                      .remove()
+                  )
     )
 }
 
