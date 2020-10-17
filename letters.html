@@ -45,28 +45,29 @@ function redraw(data) {
                     .attr("dy", ".35em")
                     .attr("y", -60)
                     .attr("x", (d,i) => i * 32 )
-                    //.style("fill-opacity", 0)
+                    .style("fill-opacity", 0)
                     .text(d => d),
-      update => update,
+      update => update.attr("class", "update"),
       exit => exit.attr("class", "exit")
                   .call(sel => sel
                     .transition(t)
                       .attr("y", 60)
-                      //.style("fill-opacity", 0)
+                      .style("fill-opacity", 0)
                       .remove()
                   )
     )
       .call(sel => sel
         .transition(t)
           .attr("y", 0)
-          //.style("fill-opacity", 1)
+          .attr("x", (d,i) => i * 32 )
+          .style("fill-opacity", 1)
       )
 }
 
 // Grab a random sample of letters from the alphabet, in alphabetical order.
 d3.interval(function() {
   redraw(d3.shuffle(alphabet)
-      .slice(0, Math.floor(Math.random() * 26))
+      .slice(0, Math.floor(Math.random() * 10) + 10)
       .sort());
 }, 1500);
 
