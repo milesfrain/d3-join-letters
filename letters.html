@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+text {
+  font: bold 48px monospace;
+}
+
+.enter {
+  fill: green;
+}
+
+.update {
+  fill: #333;
+}
+
+.exit {
+  fill: brown;
+}
+
+</style>
+<svg width="960" height="500"></svg>
+<script src="https://d3js.org/d3.v6.js"></script>
+<script>
+
+var alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+
+var svg = d3.select("svg"),
+    width = +svg.attr("width"),
+    height = +svg.attr("height"),
+    g = svg.append("g").attr("transform", "translate(32," + (height / 2) + ")");
+
+function redraw(data) {
+  var t = d3.transition()
+      .duration(1500);
+
+  // JOIN new data with old elements.
+  var text = g.selectAll("text")
+    .data(data, d => d )
+    .join(
+      enter => enter.append("text")
+                    .attr("class", "enter")
+                    .attr("dy", ".35em")
+                    .attr("y", -60)
+                    .attr("x", (d,i) => i * 32 )
+                    .style("fill-opacity", 0)
+                    .text(d => d)
+                  .transition(t)
+                    .attr("y", 0)
+                    .style("fill-opacity", 1),
+      update => update.attr("class", "update")
+                  .transition(t)
+                    .attr("x", (d,i) => i * 32 ),
+      exit => exit.attr("class", "exit")
+                  .transition(t)
+                    .attr("y", 60)
+                    .style("fill-opacity", 0)
+                    .remove()
+    )
+}
+
+// Grab a random sample of letters from the alphabet, in alphabetical order.
+d3.interval(function() {
+  redraw(d3.shuffle(alphabet)
+      .slice(0, Math.floor(Math.random() * 26))
+      .sort());
+}, 1500);
+
+</script>
