@@ -30,12 +30,14 @@ var svg = d3.select("svg"),
     height = +svg.attr("height"),
     g = svg.append("g").attr("transform", "translate(32," + (height / 2) + ")");
 
+var text = g.selectAll("text")
+
 function redraw(data) {
   var t = d3.transition()
       .duration(1500);
 
   // JOIN new data with old elements.
-  var text = g.selectAll("text")
+  text = text
     .data(data, d => d )
     .join(
       enter => enter.append("text")
